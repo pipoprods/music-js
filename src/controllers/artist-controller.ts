@@ -17,6 +17,13 @@ export class ArtistController extends BaseController {
             .catch(err => next(err));
     }
 
+    // Get artist count
+    public getArtistCount(req: Request, res: Response, next: NextFunction): void {
+        this.mpc.artists()
+            .then(data => res.json(data.length))
+            .catch(err => next(err));
+    }
+
     // Get artist albums
     public getArtistAlbums(req: Request, res: Response, next: NextFunction): void {
         this.mpc.albums(decodeURIComponent(req.params.id))

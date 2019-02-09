@@ -14,6 +14,9 @@ export class ArtistRoutes {
         this.router.route('/')
             .get((req: Request, res: Response, next: NextFunction) => { return this.artistController.getArtists(req, res, next); });
 
+        this.router.route('/count')
+            .get((req: Request, res: Response, next: NextFunction) => { return this.artistController.getArtistCount(req, res, next); });
+
         this.router.route('/:id/albums')
             .get((req: Request, res: Response, next: NextFunction) => { return this.artistController.getArtistAlbums(req, res, next); });
     }
