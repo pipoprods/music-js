@@ -1,5 +1,6 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
+import * as cors from 'cors';
 import { Mpc } from '@services/mpc';
 import { StatusRoutes } from './routes/status-routes';
 import { ArtistRoutes } from './routes/artist-routes';
@@ -26,6 +27,8 @@ class MusicCollection {
         this.app.use(bodyParser.json());
         // Support application/x-www-form-urlencoded post data
         this.app.use(bodyParser.urlencoded({ extended: false }));
+        // CORS
+        this.app.use(cors());
         // Declare routes
         this.routeHandlers.forEach(type => {
             let handler = new type(this.app);
