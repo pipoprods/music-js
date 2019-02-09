@@ -2,6 +2,7 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { Mpc } from '@services/mpc';
 import { StatusRoutes } from './routes/status-routes';
+import { ArtistRoutes } from './routes/artist-routes';
 
 class MusicCollection {
     public app: express.Application;
@@ -9,6 +10,7 @@ class MusicCollection {
     // Routes
     public routeHandlers = [
         StatusRoutes,
+        ArtistRoutes,
     ];
 
     constructor() {
