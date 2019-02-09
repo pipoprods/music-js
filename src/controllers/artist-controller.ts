@@ -16,4 +16,11 @@ export class ArtistController extends BaseController {
             .then(data => res.json(this.paginateData(req, data)))
             .catch(err => next(err));
     }
+
+    // Get artist albums
+    public getArtistAlbums(req: Request, res: Response, next: NextFunction): void {
+        this.mpc.albums(decodeURIComponent(req.params.id))
+            .then(data => res.json(this.paginateData(req, data)))
+            .catch(err => next(err));
+    }
 }

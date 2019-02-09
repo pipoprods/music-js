@@ -1,6 +1,7 @@
 import * as mpd from 'mpdclient.js';
 import { Status } from '@models/status';
 import { Artist } from '@models/artist';
+import { Album } from '@models/album';
 
 export class Mpc {
     private mpc: mpd.MPDClient;
@@ -30,6 +31,13 @@ export class Mpc {
         const cmd = new mpd.MPDCommand('list artist');
         return this.mpc.execute(cmd)
             .then(response => { return this.forceArray(response.response[0].Artist).map(a => Object.assign(new Artist(), { name: a })); })
+            .catch(error => this.error(error));
+    }
+    // Get artist albums
+    public albums(artist: string): Promise<Album[]> {
+        const cmd = new mpd.MPDCommand(`list album "${artist}"`);
+        return this.mpc.execute(cmd)
+            .then(response => { return this.forceArray(response.response[0].Album).map(a => Object.assign(new Album(), { name: a })); })
             .catch(error => this.error(error));
     }
 
