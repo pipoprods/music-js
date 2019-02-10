@@ -34,11 +34,22 @@ export class Mpc {
             .catch(error => this.error(error));
     }
     // Get artist albums
-    public albums(artist: string): Promise<Album[]> {
+    public async albums(artist: string): Promise<Album[]> {
         const cmd = new mpd.MPDCommand(`list album "${artist}"`);
-        return this.mpc.execute(cmd)
+        let albums: Album[] = await this.mpc.execute(cmd)
             .then(response => { return this.forceArray(response.response[0].Album).map(a => Object.assign(new Album(), { name: a })); })
             .catch(error => this.error(error));
+
+        // Get album dates
+        for (let index = 0; index < albums.length; index++) {
+            albums[index].year = await this.mpc.execute(new mpd.MPDCommand(`list date artist "${artist}" album "${albums[index].name}"`))
+                .then(response => {
+                    return this.forceArray(response.response[0].Date)[0];
+                })
+                .catch(error => this.error(error));
+        }
+
+        return Promise.resolve(albums);
     }
 
     // Ensure data is an array
