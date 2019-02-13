@@ -13,7 +13,7 @@ export class AlbumController extends BaseController {
 
     // Get album cover
     public getAlbumCover(req: Request, res: Response, next: NextFunction): void {
-        let path = decodeURIComponent(req.params.id);
+        let path = decodeURIComponent(req.query.path);
         let img = new Image(`media/${path}`);
         res.type(img.mimeType());
         img.resize().pipe(res);

@@ -11,7 +11,7 @@ export class AlbumRoutes {
     constructor(app) {
         this.albumController = new AlbumController(app.get('mpc'));
 
-        this.router.route('/:id/cover')
+        this.router.route('/cover')
             .get((req: Request, res: Response, next: NextFunction) => { return this.albumController.getAlbumCover(req, res, next); });
     }
 }
