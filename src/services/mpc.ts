@@ -1,4 +1,5 @@
 import * as mpd from 'mpdclient.js';
+import * as fs from 'fs';
 import { Status } from '@models/status';
 import { Artist } from '@models/artist';
 import { Album } from '@models/album';
@@ -42,11 +43,22 @@ export class Mpc {
 
         // Get album dates
         for (let index = 0; index < albums.length; index++) {
-            albums[index].year = await this.mpc.execute(new mpd.MPDCommand(`list date artist "${this.sanitizeArg(artist)}" album "${this.sanitizeArg(albums[index].name)}"`))
+            let data = await this.mpc.execute(new mpd.MPDCommand(`find artist "${this.sanitizeArg(artist)}" album "${this.sanitizeArg(albums[index].name)}"`))
                 .then(response => {
-                    return this.forceArray(response.response[0] ? response.response[0].Date : undefined)[0];
+                    let cover: string = undefined;
+                    let path = this.forceArray(response.response[0] ? response.response[0].file : '')[0].replace(/[^\/]*$/, '');
+                    ['front.jpg', 'front.png'].forEach(file => {
+                        if (cover !== undefined) return;
+                        cover = fs.existsSync(`media/${path}${file}`) ? `${path}${file}` : undefined;
+                    });
+                    return {
+                        year: this.forceArray(response.response[0] ? response.response[0].Date : undefined)[0],
+                        cover: cover
+                    };
                 })
                 .catch(error => this.error(error));
+            albums[index].year = data.year;
+            albums[index].cover = data.cover;
         }
 
         return Promise.resolve(albums);

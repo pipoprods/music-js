@@ -4,6 +4,7 @@ import * as cors from 'cors';
 import { Mpc } from '@services/mpc';
 import { StatusRoutes } from './routes/status-routes';
 import { ArtistRoutes } from './routes/artist-routes';
+import { AlbumRoutes } from './routes/album-routes';
 
 class MusicCollection {
     public app: express.Application;
@@ -12,6 +13,7 @@ class MusicCollection {
     public routeHandlers = [
         StatusRoutes,
         ArtistRoutes,
+        AlbumRoutes,
     ];
 
     constructor() {
