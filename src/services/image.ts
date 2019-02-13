@@ -8,7 +8,7 @@ export class Image {
     private mime: string;
 
     constructor(path: string) {
-        this.path = path.replace(/\//g, '\\');
+        this.path = path.replace(/\//g, '/');
         this.sanitizePath();
         this.checkFile();
     }
