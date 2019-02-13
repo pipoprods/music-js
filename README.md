@@ -1,6 +1,6 @@
 # Music-JS
 
-This project is a Web APi to [https://www.musicpd.org/](Music Player Daemon)
+This project is a Web API to [https://www.musicpd.org/](Music Player Daemon)
 based on [https://expressjs.com/](ExpressJS).
 
 It requires a running MPD to be reachable on localhost.
