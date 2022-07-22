@@ -15,7 +15,7 @@
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "express": "^4.16.4",
-    "file-type": "^10.7.1",
+    "file-type": "^16.5.4",
     "mpdclient.js": "0.0.21",
     "read-chunk": "^3.0.0",
     "sharp": "^0.21.3"
